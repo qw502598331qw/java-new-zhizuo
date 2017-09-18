@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script src="js/jquery-1.9.0.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="/js/registered.js"></script>
+<style type="text/css">
+.loginTable {
+	width: 470px;
+	border: none;
+	font-size:14px;
+	margin-left:100px;
+	position:absolute;
+	top:15%;	
+	left:35%;
+	
+}
+/*class类选择器*/
+.loginTable td {
+	width: 100%;
+	height: 80px;
+	border: none;
+	
+}
+.loginText {
+	color: silver;
+	width: 250px;
+	height:15px;
+	font-family: 微软雅黑;
+	font-weight: bold;
+	font-size: 14px;
+	padding-top: 8px;
+	padding-right: 10px;
+	padding-bottom: 8px;
+	padding-left: 10px;
+	border: silver 1px solid;
+	cursor: hand;
+}
+/*class类选择器*/
+.loginButton {
+	color: white;
+	width: 155px;
+	height: 35px;
+	font: bold 16px 微软雅黑;
+	padding: 1px 20px 0px 20px;
+	border: #CC9966 1px solid;
+	cursor: hand;
+	background: #CC9966;
+}
+#loginCheck {
+	color: silver;
+	font: bold 14px 微软雅黑;
+}
+
+.title
+{
+	font-size:20px;
+	color:#999;
+}
+
+.top
+{
+	width:1500px;
+	height:50px;
+	background-color:#003366;
+	border:1px solid #000;
+	margin-top:-35px;
+	margin-left:-200px;
+}
+
+</style>
+<body>
+<img src="images/beijing2.jpg" style="width:100%; height:700px;" >
+<table class="loginTable" >
+				<tr>
+					<td align="left">
+						<h3 class="title">
+							<!--html选择器-->
+							用户登录
+						</h3>
+						<hr size="1" width="78%" color="silver" align="left">
+					</td>
+				</tr>
+				<tr>
+					<td align="left">
+					<span style="font-size:25px; color:#999">帐号:</span>&nbsp;<input class="loginText" id="number" name="UserName" type="text"    ><a id="Usernamexinxi" style="color:red"></a></td>
+				</tr>
+				<tr>
+				     
+					<td align="left">
+					
+					<span style="font-size:25px; color:#999">密码:</span>&nbsp;<input class="loginText" id="passed"  name="UserPwd" type="password"  ></td>
+				</tr>
+                <tr>
+				 <td align="left" id="chose">
+				   <input type="radio" style="margin-left:80px;" name="xingzhi" value="1" checked  >管理员
+                    <input type="radio" style="margin-left:50px;" name="xingzhi" value="2">用户
+                    </td>
+				</tr>
+                
+				<tr height="10px;">
+					<td align="left">&nbsp;<input class="loginButton" id="loginSys"
+						name="loginSys" type="button"  value="注册"
+						onclick="loginCheck()" style="outline:none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="loginButton"
+						id="resetForm" name="resetForm" type="reset" OnClick="registered()" value="返回" style="outline:none;"></td>
+				</tr>
+				
+			</table>
+
+</body>
+<script>
+function   getRadioBoxValue(xingzhi)  
+{  
+          var obj = document.getElementsByName(xingzhi);            
+            for(i   =   0;   i   <   obj.length;   i++)    {  
+                if(obj[i].checked)    {  
+                        return   obj[i].value;  
+                }  
+            }          
+           return "无法识别";        
+}   
+$("#loginSys").click(function(){
+	if(document.getElementById("number").value&&document.getElementById("passed").value){
+		var a=getRadioBoxValue("xingzhi");
+	 $.ajax({
+		 url:"user/add1",
+			data:{
+			  "number":document.getElementById("number").value,
+		      "passed":document.getElementById("passed").value,
+		      "guan":a,
+            },
+            type:"post",
+        success : function (json) {
+        	if(json=="true"){
+				alert("增加成功");
+				window.close();
+				window.open("denglu.html");		
+			}else{
+				alert("增加失败");
+			}
+    	            },
+    	            error:function(json){
+    	 				alert("服务器未响应" +json.status);
+    	 			} 		
+    	        });
+	}
+	if(document.getElementById("number").value==0){
+		alert("请输入帐号");
+	}
+	if(document.getElementById("passed").value==0){
+		alert("请输入密码");
+	}
+	
+})   
+$("#resetForm").click(function(){
+	window.close();
+})
+</script>
+</html>

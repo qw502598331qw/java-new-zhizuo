@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.UserMapper">
+
+
+<!-- 添加一个用户信息 -->
+<insert id="save"  parameterType="com.model.User">
+insert into tb_member (MemberID,LoginName,LoginPwd,MemberEmail) values (#{MemberID},#{LoginName},#{LoginPwd},#{MemberEmail})
+</insert>
+<insert id="save1"  parameterType="com.model.Guan1">
+insert into tb_guanli (number,passed,guan) values (#{number},#{passed},#{guan})
+</insert>
+
+<!-- 删除一个用户信息 -->
+<delete id="delete" parameterType="int">
+delete from tb_member where MemberID=#{MemberID}
+</delete>
+
+<!-- 修改一个用户信息 -->
+<update id="update" parameterType="com.model.User">
+update tb_member set LoginName=#{LoginName},LoginPwd=#{LoginPwd},MemberEmail=#{MemberEmail} where MemberID=#{MemberID}
+</update>
+
+<!-- 查询全部用户信息 -->
+<select id="getUsers" parameterType="com.model.User" resultType="com.model.User">
+select * from tb_member
+</select>
+<select id="getcun" parameterType="com.model.Guan" resultType="int">
+select COUNT(*) from tb_guanli WHERE number=#{number} and passed=#{passed}
+</select>
+<select id="getGuan" parameterType="com.model.Guan" resultType="int">
+select guan from tb_guanli WHERE number=#{number} and passed=#{passed}
+</select>
+
+</mapper>	
